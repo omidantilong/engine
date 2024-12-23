@@ -5,12 +5,12 @@ case $1 in
     docker buildx build --tag tenant-image .
   ;;
   "build-local")
-    astro check && astro build && engine copy-externals
+    astro check && astro build && engine prepare
   ;;
   "serve")
     docker run --name tenant -i -t -p 8020:8020 tenant-image
   ;;
-  "copy-externals")
+  "prepare")
     mkdir -p dist/node_modules/
     mkdir -p dist/engine/
     cp -r node_modules/{react,react-dom,scheduler} dist/node_modules/
