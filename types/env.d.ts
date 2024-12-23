@@ -28,6 +28,8 @@ declare interface ContentfulDefaultPage extends Sys {
 
 declare type EngineContentEntry = ContentfulDefaultPage
 
-declare type ContentModule = {
-  [key: string]: any
+declare interface DefaultModule extends Sys {
+  type: string
 }
+
+declare type ContentModule = Omit<TenantModule, DefaultModule>
