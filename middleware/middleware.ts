@@ -17,8 +17,9 @@ import { sanitizePath } from "../util/path"
 export const onRequest = defineMiddleware(async (context, next) => {
   //console.log(context.routePattern)
   //const isDynamic = checkIsDynamicPageRequest(context)
+  const isEngineInternalRoute = !!context.routePattern.includes("__engine__")
 
-  if (!context.isPrerendered) {
+  if (!context.isPrerendered && !isEngineInternalRoute) {
     const pathname = sanitizePath(context.url.pathname)
     //const { data } = await getPage(pathname)
     //console.log(data)

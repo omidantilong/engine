@@ -73,25 +73,6 @@ export function engine(): AstroIntegration {
         updateConfig,
         addMiddleware,
       }) => {
-        // if (!opts.customIndex) {
-        //   injectRoute(defaultRoute())
-        // }
-        // Another way of doing this, without using the customIndex option
-        // Manually test for existence of local template
-        // Could be turned into an array of default template paths to check
-        // if (!fs.existsSync("./src/pages/[...slug].astro")) injectRoute(defaultRoute())
-
-        // And another way, using a defaultRoutes object
-        for (const route in defaultRoutes) {
-          if (!fs.existsSync(route)) injectRoute(defaultRoutes[route]())
-        }
-        addDevToolbarApp({
-          id: "astro:engine",
-          name: "Engine",
-          icon: engineIcon,
-          entrypoint: "@omidantilong/engine/toolbar/toolbar.ts",
-        })
-
         updateConfig({
           trailingSlash: "ignore",
           vite: {
@@ -99,9 +80,25 @@ export function engine(): AstroIntegration {
           },
         })
 
+        for (const route in defaultRoutes) {
+          if (!fs.existsSync(route)) injectRoute(defaultRoutes[route]())
+        }
+
+        injectRoute({
+          pattern: "/__engine__/update",
+          entrypoint: "@omidantilong/engine/pages/api/update.ts",
+        })
+
         addMiddleware({
           entrypoint: "@omidantilong/engine/middleware/middleware.ts",
           order: "pre",
+        })
+
+        addDevToolbarApp({
+          id: "astro:engine",
+          name: "Engine",
+          icon: engineIcon,
+          entrypoint: "@omidantilong/engine/toolbar/toolbar.ts",
         })
       },
     },
