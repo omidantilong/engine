@@ -5,7 +5,7 @@ import { parentLookup } from "./parentLookup"
 import fs from "node:fs/promises"
 import gqlmin from "gqlmin"
 
-//@ts-expect-error importing local tenant config
+//@ts-ignore
 import { engineConfig } from "../../../../tenant.config"
 
 // import { Keyv } from "keyv"

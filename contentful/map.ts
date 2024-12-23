@@ -23,7 +23,7 @@ import * as fragments from "../contentful/fragments"
 import { engineDefaults } from "../config/defaults"
 import { getFullPath } from "../util/path"
 
-//@ts-expect-error importing local tenant config
+//@ts-ignore
 import { engineConfig } from "../../../../tenant.config"
 
 dotenv.config({ path: `.env.development` })
