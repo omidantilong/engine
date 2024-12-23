@@ -5,7 +5,7 @@ const defaultComponents = ["Dummy"]
 export async function collectComponents({
   entries,
 }: {
-  entries: Array<ContentModule>
+  entries: Array<CMS.ContentModule>
 }): Promise<ComponentMap> {
   console.log("Collecting components")
   const components: ComponentMap = {}

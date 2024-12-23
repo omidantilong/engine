@@ -6,7 +6,7 @@ export function sanitizePath(path: string) {
   return path.endsWith("/") ? path.slice(0, -1) : path
 }
 
-export function getPathSegments(entry: EngineContentEntry) {
+export function getPathSegments(entry: CMS.ContentEntry) {
   const path = [entry.slug]
 
   if ("parent" in entry && entry.parent) {
@@ -16,6 +16,6 @@ export function getPathSegments(entry: EngineContentEntry) {
   return path.reverse().join("/")
 }
 
-export function getFullPath(entry: EngineContentEntry, root: string = "") {
+export function getFullPath(entry: CMS.ContentEntry, root: string = "") {
   return entry.slug === "/" ? entry.slug : `${root}/${getPathSegments(entry)}`
 }
