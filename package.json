@@ -9,7 +9,7 @@
   "license": "ISC",
   "description": "",
   "bin": {
-    "engine": "cli.js"
+    "engine": "bin/cli.sh"
   },
   "peerDependencies": {
     "astro": "^5.1.1"
