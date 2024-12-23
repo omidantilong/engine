@@ -12,9 +12,9 @@ interface Props {
 }
 
 let components: ContentModule | false = false
-const clientComponentPath = "../../../../src/components"
 try {
-  components = await import(clientComponentPath)
+  //@ts-ignore
+  components = await import("../../../../src/components")
 } catch(e) {
   console.log(e)
 }
