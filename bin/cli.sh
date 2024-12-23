@@ -20,7 +20,7 @@ case $1 in
     cp -r engine/{paths,refs}.json dist/engine
   ;;
   "init")
-    node node_modules/@omidantilong/engine/bin/init.js
+    node node_modules/@omidantilong/engine/bin/init.mjs
   ;;
 esac
 
