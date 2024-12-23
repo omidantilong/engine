@@ -26,6 +26,7 @@
   "dependencies": {
     "fs-extra": "^11.2.0",
     "gqlmin": "^0.2.2",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.0.0",
+    "yocto-spinner": "^0.1.2"
   }
 }
