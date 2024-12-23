@@ -4,6 +4,9 @@ case $1 in
   "build")
     docker buildx build --tag tenant-image .
   ;;
+  "build-local")
+    astro check && astro build && engine copy-externals
+  ;;
   "serve")
     docker run --name tenant -i -t -p 8020:8020 tenant-image
   ;;
