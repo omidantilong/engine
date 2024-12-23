@@ -19,5 +19,8 @@ case $1 in
     cp -r node_modules/{react,react-dom,scheduler} dist/node_modules/
     cp -r engine/{paths,refs}.json dist/engine
   ;;
+  "init")
+    echo "engine init"
+  ;;
 esac
 
