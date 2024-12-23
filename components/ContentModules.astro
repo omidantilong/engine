@@ -7,11 +7,11 @@
  */
 
 
-interface Props {
+ interface Props {
   data: Array<ContentModule>
 }
 
-let components: ContentModule | false = false
+let components
 try {
   //@ts-ignore
   components = await import("../../../../src/components")
@@ -25,7 +25,7 @@ const { data } = Astro.props
 {
   components && data.map(async (entry) => {
     if (entry && components[entry.type]) {
-      const Component = components[entry.type] as any
+      const Component = components[entry.type]
       return <Component data={entry} />
     }
   })
