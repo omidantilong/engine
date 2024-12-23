@@ -1,0 +1,26 @@
+{
+  "name": "@omidantilong/engine",
+  "version": "0.0.1",
+  "main": "engine.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "peerDependencies": {
+    "astro": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/hast": "^3.0.4",
+    "@types/node": "^22.10.2",
+    "@types/unist": "^3.0.3",
+    "dotenv": "^16.4.7"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "gqlmin": "^0.2.2",
+    "unist-util-visit": "^5.0.0"
+  }
+}
