@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro"
 import { getEntry } from "../contentful"
 import ContentModules from "../components/ContentModules.astro"
 
-//@ts-expect-error importing local tenant components
+//@ts-ignore
 import * as components from "../../../../src/components"
 
 
