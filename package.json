@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "main": "engine.ts",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "postinstall": "node bin/post-install.js"
   },
   "author": "",
   "license": "ISC",
