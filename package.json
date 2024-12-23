@@ -8,6 +8,9 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "bin": {
+    "engine": "cli.js"
+  },
   "peerDependencies": {
     "astro": "^5.1.1"
   },
