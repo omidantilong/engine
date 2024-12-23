@@ -1,5 +1,8 @@
 #/bin/bash
 
+# This file deals with all incoming `engine` commands
+# It is quite simple at the moment and won't scale well
+
 case $1 in 
   "build")
     docker buildx build --tag tenant-image .
@@ -17,3 +20,4 @@ case $1 in
     cp -r engine/{paths,refs}.json dist/engine
   ;;
 esac
+
