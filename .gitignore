@@ -18,5 +18,8 @@ pnpm-debug.log*
 .env.production
 .env.*
 
-# macOS-specific files
+# os files
 .DS_Store
+
+# engine 
+engine/
