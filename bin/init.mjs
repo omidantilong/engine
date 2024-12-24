@@ -186,11 +186,12 @@ async function writePackageScripts() {
       "astro:build": "astro check && astro build",
       "astro:check": "astro check",
       "astro:preview": "astro preview",
-      "engine:build:local": "engine build-local",
+      "engine:build-local": "engine build-local",
       "engine:build": "engine build",
       "engine:serve": "engine serve",
       "engine:map": "tsx ./node_modules/@omidantilong/engine/contentful/map.ts",
-      "engine:prepare": "engine prepare",
+      "engine:postbuild": "engine postbuild",
+      "engine:prebuild": "engine prebuild",
       test: "vitest",
     }
 

@@ -8,16 +8,20 @@ case $1 in
     astro check && docker buildx build --tag tenant-image .
   ;;
   "build-local")
-    astro check && astro build && engine prepare
+    engine prebuild && astro check && astro build && engine postbuild
   ;;
   "serve")
     docker run --name tenant -i -t -p 8020:8020 tenant-image
   ;;
-  "prepare")
+  "prebuild")
+    esbuild tenant.config.ts --outfile=engine/tenant.config.mjs
+  ;;
+  "postbuild")
     mkdir -p dist/node_modules/
     mkdir -p dist/engine/
     cp -r node_modules/{react,react-dom,scheduler} dist/node_modules/
-    cp -r engine/{paths,refs}.json dist/engine
+    cp -r engine/ dist/engine
+    rm engine/tenant.config.mjs
   ;;
   "init")
     node node_modules/@omidantilong/engine/bin/init.mjs
