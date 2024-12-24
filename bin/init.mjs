@@ -128,12 +128,8 @@ pnpm-debug.log*
 # editor
 *.code-workspace
 
-# misc
-scratch/
-
-# Engine files
-engine/paths.json
-engine/refs.json
+# engine
+engine/
 `
 
 const componentIndex = `
