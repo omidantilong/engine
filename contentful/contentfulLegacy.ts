@@ -22,49 +22,6 @@ export { parentLookup }
 
 export { parse } from "./markdown"
 
-export async function getInternalLink(id: string) {
-  const query = `
-    ${fragments.pageData} 
-    query LinkQuery {
-      internalLink(id: "${id}") {
-        type: __typename
-        ...on InternalLink {
-          page {
-            ${parentLookup(3)}
-          }
-        }
-      }
-    }
-  `
-
-  return await fetchData({ query })
-}
-
-export async function getInternalLinkCollection(links: string[]) {
-  const condition = `sys: { id_in: [${links.map((link) => `"${link}"`)} ] }`
-
-  const query = `
-  ${fragments.pageData}
-  query LinkCollectionQuery {
-    collection: internalLinkCollection(where: { ${condition} } ) {
-      items {
-        type: __typename
-        ...on InternalLink {
-          sys {
-            id
-          }
-          page {
-            ${parentLookup(2)}
-          }
-        }
-      }
-    }
-  }
-  `
-
-  return await fetchData({ query })
-}
-
 export async function getEntry(ref: EngineEntryReference): Promise<EngineEntryResponse> {
   const query = contentTypes[ref.type as keyof EngineContentTypeConfig].entryQuery({
     ref,
