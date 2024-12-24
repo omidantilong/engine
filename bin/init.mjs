@@ -1,3 +1,9 @@
+/* 
+ * This needs a lot of tidying up, splitting things out into separate
+   files, etc. Just a proof of concept atm for what an init script could
+   look like. 
+ */
+
 import fs from "fs-extra"
 import path from "node:path"
 import util from "node:util"
@@ -6,6 +12,7 @@ import yoctoSpinner from "yocto-spinner"
 
 const exec = util.promisify(child_process.exec)
 const cwd = process.cwd()
+const dir = path.basename(cwd)
 
 function formatJSON(input) {
   return JSON.stringify(input, null, 2)
@@ -79,20 +86,65 @@ export default defineConfig({
 })
 `
 
+const vitestConfig = `
+/// <reference types="vitest" />
+import { getViteConfig } from "astro/config"
+
+export default getViteConfig({})
+`
+
 const tenantConfig = `
 import type { EngineConfig } from "@omidantilong/engine/types"
 
 export const engineConfig: EngineConfig = {}
-`.trimStart()
+`
+
+const gitIgnoreSettings = `
+# build output
+dist/
+
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment
+.env
+.env.production
+.env.*
+
+# os files
+.DS_Store
+
+# editor
+*.code-workspace
+
+# misc
+scratch/
+
+# Engine files
+engine/paths.json
+engine/refs.json
+`
 
 async function setupFiles() {
   try {
     await fs.ensureDir(cwd + "/engine")
+    await fs.ensureDir(cwd + "/src")
     await fs.ensureDir(cwd + "/types")
     await fs.ensureDir(cwd + "/.vscode")
     await fs.outputFile(cwd + "/.vscode/settings.json", editorSettings)
     await fs.outputFile(cwd + "/tsconfig.json", tsconfigSettings)
     await fs.outputFile(cwd + "/.prettierrc", prettierSettings)
+    await fs.outputFile(cwd + "/.gitignore", gitIgnoreSettings.trimStart())
+
     return true
   } catch (e) {
     return false
@@ -101,9 +153,11 @@ async function setupFiles() {
 
 async function setupTenant() {
   try {
-    await fs.outputFile(cwd + "/astro.config.ts", astroConfig)
-    await fs.outputFile(cwd + "/types/env.d.ts", envTypes)
-    await fs.outputFile(cwd + "/tenant.config.ts", tenantConfig)
+    await fs.outputFile(cwd + "/astro.config.ts", astroConfig.trimStart())
+    await fs.outputFile(cwd + "/types/env.d.ts", envTypes.trimStart())
+    await fs.outputFile(cwd + "/tenant.config.ts", tenantConfig.trimStart())
+    await fs.outputFile(cwd + "/vitest.config.ts", vitestConfig.trimStart())
+
     return true
   } catch (e) {
     return false
@@ -111,16 +165,178 @@ async function setupTenant() {
 }
 
 async function installDeps() {
-  return await execute("npm install astro @astrojs/node @astrojs/react unocss")
+  return await execute("npm install astro @astrojs/node @astrojs/react unocss vitest tsx")
+}
+
+async function writePackageScripts() {
+  try {
+    const pkg = await fs.readFile(cwd + "/package.json").then((res) => JSON.parse(res.toString()))
+
+    pkg.scripts = {
+      dev: "astro dev",
+      astro: "astro",
+      "astro:dev": "astro dev",
+      "astro:build": "astro check && astro build",
+      "astro:check": "astro check",
+      "astro:preview": "astro preview",
+      "engine:build:local": "engine build-local",
+      "engine:build": "engine build",
+      "engine:serve": "engine serve",
+      "engine:map": "tsx ./node_modules/@omidantilong/engine/contentful/map.ts",
+      "engine:prepare": "engine prepare",
+      test: "vitest",
+    }
+
+    pkg.type = "module"
+    pkg.engines = { node: ">= 20" }
+    pkg.name = dir
+
+    await fs.writeFile(cwd + "/package.json", formatJSON(pkg))
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+async function setupCSS() {
+  const mainSCSSContent = `
+  @use "@/styles/reset";
+  `
+
+  const resetSCSSContent = `
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Remove default margin in favour of better control in authored CSS */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin-block-end: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Set shorter line heights on interactive elements */
+button,
+input,
+label {
+  line-height: 1.1;
+}
+
+/* Balance text wrapping on headings */
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  //color: currentColor;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 5ex;
+}
+
+:root {
+  --flow-space: 1rem;
+}
+
+.flow > * + * {
+  margin-block-start: var(--flow-space, 1rem);
+}
+  `
+
+  try {
+    await fs.ensureDir(cwd + "/src/styles")
+    await fs.outputFile(cwd + "/src/styles/main.scss", mainSCSSContent)
+    await fs.outputFile(cwd + "/src/styles/_reset.scss", resetSCSSContent)
+
+    return true
+  } catch (e) {
+    return false
+  }
 }
 
 async function init() {
-  const pkg = await fs.readFile(cwd + "/package.json").then((res) => JSON.parse(res.toString()))
-
   const actions = {
     "Installing dependencies": () => installDeps(),
-    "Setting up Tenant config": () => setupTenant(),
     "Setting up project files": () => setupFiles(),
+    "Setting up Tenant config": () => setupTenant(),
+    "Writing package scripts": () => writePackageScripts(),
+    "Applying default styles": () => setupCSS(),
     //"Writing local content map": () => exec("npm run engine:map"),
   }
 
