@@ -2,10 +2,13 @@
 
 The package contains the internals ("engine") for the astro-tenant repo.
 
-It's not currently published to NPM. It can be installed straight from github:
+It's not currently published to NPM, but it can be installed straight from github.
+
+To get started in a fresh project, run:
 
 ```
 npm install github:omidantilong/engine
+npx engine init
 ```
 
 ### How it works
