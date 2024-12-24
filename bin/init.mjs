@@ -134,6 +134,10 @@ engine/paths.json
 engine/refs.json
 `
 
+const componentIndex = `
+export {}
+`
+
 async function setupFiles() {
   try {
     await fs.ensureDir(cwd + "/engine")
@@ -157,6 +161,7 @@ async function setupTenant() {
     await fs.outputFile(cwd + "/types/env.d.ts", envTypes.trimStart())
     await fs.outputFile(cwd + "/tenant.config.ts", tenantConfig.trimStart())
     await fs.outputFile(cwd + "/vitest.config.ts", vitestConfig.trimStart())
+    await fs.outputFile(cwd + "/src/components/index.ts", componentIndex.trimStart())
 
     return true
   } catch (e) {

@@ -3,10 +3,6 @@ import Layout from "../layouts/Layout.astro"
 import { getEntry } from "../contentful"
 import ContentModules from "../components/ContentModules.astro"
 
-//@ts-ignore
-import * as components from "../../../../src/components"
-
-
 const { entry } = await getEntry(Astro.locals.engine.ref)
 
 if (entry.type !== "Page") {
@@ -22,12 +18,6 @@ const contentModules = entry.modulesCollection.items || []
       <h1>{entry.title}</h1>
       <time>{entry.sys.publishedAt}</time>
     </div>
-    <!-- <TestCard data={{ title: "plop" }} /> -->
-
     {contentModules && <ContentModules data={contentModules} />}
-    <components.Foo data={{ title: "simple astro component test" }} />
-    <components.Alert text="react component rendered on the server" />
-    <components.Dummy data={{ title: "another simple astro component bringing its own styles" }} />
-    <!-- <Button>Example</Button> -->
   </main>
 </Layout>
