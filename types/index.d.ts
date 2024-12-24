@@ -1,5 +1,5 @@
 export interface EngineConfig {
-  contentTypes: EngineContentTypeConfig
+  contentTypes?: EngineContentTypeConfig
 }
 
 export interface EngineContentTypeConfig {
