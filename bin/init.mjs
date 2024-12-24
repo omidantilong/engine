@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /* 
  * This needs a lot of tidying up, splitting things out into separate
    files, etc. Just a proof of concept atm for what an init script could
