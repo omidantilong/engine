@@ -1,10 +1,10 @@
 import type { EngineEntryReference, EngineEntryResponse, EngineContentTypeConfig } from "../types"
 import * as fragments from "./fragments"
-import { engineDefaults } from "../config/defaults"
+//import { engineDefaults } from "../config/defaults"
 import { parentLookup } from "./parentLookup"
 import fs from "node:fs/promises"
 import gqlmin from "gqlmin"
-
+import { loadEngineConfig } from "../config"
 //@ts-ignore
 import { engineConfig } from "../../../../tenant.config"
 
@@ -13,25 +13,32 @@ import { engineConfig } from "../../../../tenant.config"
 
 // let cache: Cache
 
-const contentTypes: EngineContentTypeConfig = {
-  ...engineConfig.contentTypes,
-  ...engineDefaults.contentTypes,
-}
+// const contentTypes: EngineContentTypeConfig = {
+//   ...engineConfig.contentTypes,
+//   ...engineDefaults.contentTypes,
+// }
+
+const engineConfig = await loadEngineConfig()
 
 export { parentLookup }
 
 export { parse } from "./markdown"
 
 export async function getEntry(ref: EngineEntryReference): Promise<EngineEntryResponse> {
-  const query = contentTypes[ref.type as keyof EngineContentTypeConfig].entryQuery({
+  const query = engineConfig.contentTypes?.[ref.type as keyof EngineContentTypeConfig].entryQuery({
     ref,
     fragments,
     parentLookup,
   })
-  const { data, errors } = await fetchData({ query })
-
-  const { entry } = data
-  return { entry, errors }
+  if (query) {
+    const { data, errors } = await fetchData({ query })
+    const { entry } = data
+    return { entry, errors }
+  } else {
+    return {
+      errors: "invalid query",
+    }
+  }
 }
 
 export async function getAsset(id: string) {
