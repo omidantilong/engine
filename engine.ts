@@ -1,6 +1,7 @@
 import type { AstroIntegration, ViteUserConfig } from "astro"
 import type { EngineDefaultRoutes } from "./types"
 import fs from "fs-extra"
+import replace from "@rollup/plugin-replace"
 
 /*
 This is a very simple example of an Astro integration injecting custom
@@ -76,6 +77,15 @@ export function engine(): AstroIntegration {
         updateConfig({
           trailingSlash: "ignore",
           vite: {
+            build: {
+              rollupOptions: {
+                plugins: [
+                  replace({
+                    "process.env.NODE_ENV": JSON.stringify("production"),
+                  }),
+                ],
+              },
+            },
             ssr: viteConfig.ssr || {},
           },
         })
