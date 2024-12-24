@@ -8,6 +8,6 @@ export async function loadConfig(): Promise<EngineConfig> {
     return config.engineConfig
   }
 
-  const config = await import(cwd + "/tenant.config.mjs")
+  const config = await import(cwd + "/engine/tenant.config.mjs")
   return config.engineConfig
 }
