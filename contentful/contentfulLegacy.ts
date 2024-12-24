@@ -7,22 +7,18 @@ import gqlmin from "gqlmin"
 
 //@ts-ignore
 import { engineConfig } from "../../../../tenant.config"
-import { loadConfig } from "../config/load-config"
-// import { Keyv } from "keyv"
-// import { createCache, type Cache } from "cache-manager"
+//import { loadConfig } from "../config/load-config"
 
-// let cache: Cache
 export { parentLookup }
-
 export { parse } from "./markdown"
+
+//const conf = await loadConfig()
 
 const contentTypes: EngineContentTypeConfig = {
   ...engineConfig.contentTypes,
   ...engineDefaults.contentTypes,
 }
 
-const conf = await loadConfig()
-console.log(conf)
 export async function getEntry(ref: EngineEntryReference): Promise<EngineEntryResponse> {
   const query = contentTypes[ref.type as keyof EngineContentTypeConfig].entryQuery({
     ref,
