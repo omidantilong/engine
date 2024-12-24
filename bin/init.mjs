@@ -117,12 +117,8 @@ async function installDeps() {
 async function init() {
   const pkg = await fs.readFile(cwd + "/package.json").then((res) => JSON.parse(res.toString()))
 
-  // const spinner = yoctoSpinner({ text: "Creating path map" }).start()
-  // await exec("npm run engine:map")
-  // spinner.success()
-
   const actions = {
-    //"Installing dependencies": () => installDeps(),
+    "Installing dependencies": () => installDeps(),
     "Setting up Tenant config": () => setupTenant(),
     "Setting up project files": () => setupFiles(),
     //"Writing local content map": () => exec("npm run engine:map"),
