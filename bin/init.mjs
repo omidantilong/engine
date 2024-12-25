@@ -132,6 +132,15 @@ pnpm-debug.log*
 engine/
 `
 
+const dockerIgnoreSettings = `
+.DS_Store
+node_modules
+dist
+scratch
+.vscode
+.code-workspace
+`
+
 const componentIndex = `
 export {}
 `
@@ -142,10 +151,12 @@ async function setupFiles() {
     await fs.ensureDir(cwd + "/src")
     await fs.ensureDir(cwd + "/types")
     await fs.ensureDir(cwd + "/.vscode")
+
     await fs.outputFile(cwd + "/.vscode/settings.json", editorSettings)
     await fs.outputFile(cwd + "/tsconfig.json", tsconfigSettings)
     await fs.outputFile(cwd + "/.prettierrc", prettierSettings)
     await fs.outputFile(cwd + "/.gitignore", gitIgnoreSettings.trimStart())
+    await fs.outputFile(cwd + "/.dockerignore", dockerIgnoreSettings.trimStart())
 
     return true
   } catch (e) {
