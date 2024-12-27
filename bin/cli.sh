@@ -5,7 +5,7 @@
 
 case $1 in 
   "build")
-    astro check && engine prebuild && docker buildx build --tag tenant-image . && engine postbuild
+    astro check && docker buildx build --tag tenant-image .
   ;;
   "build-local")
     astro check && engine prebuild && astro build && engine postbuild
