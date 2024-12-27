@@ -16,6 +16,8 @@ import { engineConfig } from "../../../../tenant.config"
 import { getFullPath } from "../util/path"
 //import { loadConfig } from "../config/load-config"
 
+import { resolve } from "node:path"
+
 export { parentLookup }
 export { parse } from "./markdown"
 
@@ -138,15 +140,17 @@ export async function getEntryRefFromPath(pathname: string): Promise<EngineEntry
   return paths[pathname] || false
 }
 
-export async function getEntryPathFromRef(id: string): Promise<string> {
-  //const d = await cache.get("foo")
+// export async function getEntryPathFromRef(id: string): Promise<string> {
+//   //const d = await cache.get("foo")
 
-  //console.log(d)
-  const refs = await fs.readFile("public/refs.json").then((res) => JSON.parse(res.toString()))
-  return refs[id] ?? false
-}
+//   //console.log(d)
+//   const refs = await fs.readFile("public/refs.json").then((res) => JSON.parse(res.toString()))
+//   return refs[id] ?? false
+// }
 
 export async function createContentMap() {
+  console.log("Rebuilding content path map")
+  const cwd = process.cwd()
   const contentTypes: EngineContentTypeConfig = {
     ...engineConfig.contentTypes,
     ...engineDefaults.contentTypes,
@@ -168,7 +172,7 @@ export async function createContentMap() {
     })
   }
 
-  await fs.writeFile("engine/paths.json", JSON.stringify(pathMap))
+  await fs.writeFile(resolve(cwd + "/engine/paths.json"), JSON.stringify(pathMap))
 
   return pathMap
   //await fs.writeFile("engine/refs.json", JSON.stringify(refMap))
