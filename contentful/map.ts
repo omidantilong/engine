@@ -80,6 +80,8 @@ export async function fetchData({ query, preview = false }: { query: string; pre
 // }
 
 export async function createContentMap() {
+  const cwd = process.cwd()
+
   const contentTypes: EngineContentTypeConfig = {
     ...engineConfig.contentTypes,
     ...engineDefaults.contentTypes,
@@ -113,8 +115,8 @@ export async function createContentMap() {
 
   //await fs.writeFile("public/links.json", JSON.stringify(linkMap))
   //console.log(links)
-  await outputFile("engine/paths.json", JSON.stringify(pathMap))
-  await outputFile("engine/refs.json", JSON.stringify(refMap))
+  await outputFile(cwd + "/engine/paths.json", JSON.stringify(pathMap))
+  await outputFile(cwd + "/engine/refs.json", JSON.stringify(refMap))
 }
 
 createContentMap().then(() => {
