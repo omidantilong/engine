@@ -1,4 +1,10 @@
-import type { EngineEntryReference, EngineEntryResponse, EngineContentTypeConfig } from "../types"
+import type {
+  EngineEntryReference,
+  EngineEntryResponse,
+  EngineContentTypeConfig,
+  EnginePathMap,
+  EngineReferenceMap,
+} from "../types"
 import * as fragments from "./fragments"
 import { engineDefaults } from "../config/defaults"
 import { parentLookup } from "./parentLookup"
@@ -7,6 +13,7 @@ import gqlmin from "gqlmin"
 
 //@ts-ignore
 import { engineConfig } from "../../../../tenant.config"
+import { getFullPath } from "../util/path"
 //import { loadConfig } from "../config/load-config"
 
 export { parentLookup }
@@ -120,7 +127,14 @@ export async function fetchData({ query, preview = false }: { query: string; pre
 // }
 
 export async function getEntryRefFromPath(pathname: string): Promise<EngineEntryReference | false> {
-  const paths = await fs.readFile("engine/paths.json").then((res) => JSON.parse(res.toString()))
+  let paths: EnginePathMap
+  try {
+    await fs.access("engine/paths.json")
+    paths = await fs.readFile("engine/paths.json").then((res) => JSON.parse(res.toString()))
+  } catch (e) {
+    paths = await createContentMap()
+  }
+
   return paths[pathname] || false
 }
 
@@ -130,4 +144,32 @@ export async function getEntryPathFromRef(id: string): Promise<string> {
   //console.log(d)
   const refs = await fs.readFile("public/refs.json").then((res) => JSON.parse(res.toString()))
   return refs[id] ?? false
+}
+
+export async function createContentMap() {
+  const contentTypes: EngineContentTypeConfig = {
+    ...engineConfig.contentTypes,
+    ...engineDefaults.contentTypes,
+  }
+
+  const pathMap: EnginePathMap = {}
+  const refMap: EngineReferenceMap = {}
+
+  for (const contentType in contentTypes) {
+    const { collectionQuery, root } = contentTypes[contentType as keyof EngineContentTypeConfig]
+    const query = collectionQuery({ fragments, parentLookup })
+    const { data } = await fetchData({ query })
+
+    data.collection.items.forEach((entry: CMS.ContentEntry) => {
+      const resolvedPath = getFullPath(entry, root)
+
+      pathMap[resolvedPath] = { id: entry.sys.id, type: entry.type }
+      refMap[entry.sys.id] = resolvedPath
+    })
+  }
+
+  await fs.writeFile("engine/paths.json", JSON.stringify(pathMap))
+
+  return pathMap
+  //await fs.writeFile("engine/refs.json", JSON.stringify(refMap))
 }

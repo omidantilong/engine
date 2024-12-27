@@ -23,7 +23,7 @@ case $1 in
   "postbuild")
     mkdir -p dist/node_modules/
     mkdir -p dist/engine/
-    cp -r engine/ dist/engine
+    cp -r engine/tenant.config.mjs dist/engine/
     ls -R engine/
 
   ;;
