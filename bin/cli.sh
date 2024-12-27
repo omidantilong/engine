@@ -23,7 +23,6 @@ case $1 in
     mkdir -p dist/node_modules/
     mkdir -p dist/engine/
     cp -r engine/ dist/engine
-    rm engine/tenant.config.mjs
   ;;
   "init")
     node node_modules/@omidantilong/engine/bin/init.mjs
