@@ -11,6 +11,15 @@ npm install github:omidantilong/engine
 npx engine init
 ```
 
+Then you'll need a `.env.development` file with the following:
+
+```
+PUBLIC_CONTENTFUL_DELIVERY_API=
+PUBLIC_CONTENTFUL_PREVIEW_API=
+PUBLIC_CONTENTFUL_SPACE_ID=
+PUBLIC_CONTENTFUL_ENV=
+```
+
 ### How it works
 
 At its core, the `engine` module is an Astro integration providing a wrapper around Contentful.
