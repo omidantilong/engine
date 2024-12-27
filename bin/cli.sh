@@ -17,12 +17,15 @@ case $1 in
     docker run --name tenant -i -t -p 8020:8020 tenant-image
   ;;
   "prebuild")
+    echo $PWD
     esbuild tenant.config.ts --outfile=$PWD/engine/tenant.config.mjs
   ;;
   "postbuild")
     mkdir -p dist/node_modules/
     mkdir -p dist/engine/
     cp -r engine/ dist/engine
+    ls -R engine/
+
   ;;
   "init")
     node node_modules/@omidantilong/engine/bin/init.mjs
