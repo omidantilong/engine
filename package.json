@@ -11,9 +11,7 @@
   "bin": {
     "engine": "bin/cli.sh"
   },
-  "peerDependencies": {
-    "astro": "^5.1.1"
-  },
+  "peerDependencies": {},
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/node": "^9.0.0",
@@ -22,6 +20,7 @@
     "@types/hast": "^3.0.4",
     "@types/node": "^22.10.2",
     "@types/unist": "^3.0.3",
+    "astro": "^5.1.1",
     "dotenv": "^16.4.7",
     "esbuild": "^0.24.2",
     "fs-extra": "^11.2.0",
