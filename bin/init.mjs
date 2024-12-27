@@ -176,7 +176,7 @@ async function setupTenant() {
 }
 
 async function installDeps() {
-  return await execute("npm i astro @astrojs/node vitest typescript tsx")
+  return await execute("npm i vitest typescript")
 }
 
 async function writePackageScripts() {

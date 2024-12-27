@@ -11,7 +11,6 @@
   "bin": {
     "engine": "bin/cli.sh"
   },
-  "peerDependencies": {},
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/node": "^9.0.0",
@@ -32,6 +31,7 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.1",
     "sass-embedded": "^1.83.0",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
