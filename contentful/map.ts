@@ -116,7 +116,7 @@ export async function createContentMap() {
   //await fs.writeFile("public/links.json", JSON.stringify(linkMap))
   //console.log(links)
   await outputFile(cwd + "/engine/paths.json", JSON.stringify(pathMap))
-  await outputFile(cwd + "/engine/refs.json", JSON.stringify(refMap))
+  //await outputFile(cwd + "/engine/refs.json", JSON.stringify(refMap))
 }
 
 createContentMap().then(() => {
