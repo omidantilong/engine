@@ -28,6 +28,8 @@ const contentTypes: EngineContentTypeConfig = {
   ...engineDefaults.contentTypes,
 }
 
+const cwd = process.cwd()
+
 export async function getEntry(ref: EngineEntryReference): Promise<EngineEntryResponse> {
   const query = contentTypes[ref.type as keyof EngineContentTypeConfig].entryQuery({
     ref,
@@ -103,36 +105,13 @@ export async function fetchData({ query, preview = false }: { query: string; pre
   })
 }
 
-// async function buildCache() {
-//   console.log("Rebuilding path cache")
-//   const paths = await fs.readFile("engine/paths.json").then((res) => JSON.parse(res.toString()))
-//   for (const path in paths) {
-//     await cache.set(path, paths[path])
-//   }
-// }
-
-// export async function getEntryRefFromPath(pathname: string): Promise<EngineEntryReference | false> {
-//   if (!cache) {
-//     cache = createCache({
-//       ttl: 60000,
-//       stores: [new Keyv()],
-//     })
-//     await buildCache()
-//   }
-//   let ref: EngineEntryReference | null = await cache.get(pathname)
-//   if (!ref) {
-//     await buildCache()
-//     ref = await cache.get(pathname)
-//   }
-
-//   return ref ?? false
-// }
-
 export async function getEntryRefFromPath(pathname: string): Promise<EngineEntryReference | false> {
   let paths: EnginePathMap
   try {
-    await fs.access("engine/paths.json")
-    paths = await fs.readFile("engine/paths.json").then((res) => JSON.parse(res.toString()))
+    await fs.access(resolve(cwd + "/engine/paths.json"))
+    paths = await fs
+      .readFile(resolve(cwd + "/engine/paths.json"))
+      .then((res) => JSON.parse(res.toString()))
   } catch (e) {
     paths = await createContentMap()
   }
@@ -150,11 +129,6 @@ export async function getEntryRefFromPath(pathname: string): Promise<EngineEntry
 
 export async function createContentMap() {
   console.log("Rebuilding content path map")
-  const cwd = process.cwd()
-  const contentTypes: EngineContentTypeConfig = {
-    ...engineConfig.contentTypes,
-    ...engineDefaults.contentTypes,
-  }
 
   const pathMap: EnginePathMap = {}
   const refMap: EngineReferenceMap = {}
