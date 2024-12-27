@@ -22,9 +22,6 @@ case $1 in
   "postbuild")
     mkdir -p dist/node_modules/
     mkdir -p dist/engine/
-    cp -r node_modules/react dist/node_modules/
-    cp -r node_modules/react-dom dist/node_modules/
-    cp -r node_modules/scheduler dist/node_modules/
     cp -r engine/ dist/engine
     rm engine/tenant.config.mjs
   ;;
