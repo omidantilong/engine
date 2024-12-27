@@ -61,11 +61,8 @@ const envTypes = `
 
 const astroConfig = `
 import { defineConfig } from "astro/config"
-import node from "@astrojs/node"
-import react from "@astrojs/react"
-import UnoCSS from "unocss/astro"
-
 import { engine } from "@omidantilong/engine"
+import node from "@astrojs/node"
 
 export default defineConfig({
   output: "server",
@@ -73,7 +70,7 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
-  integrations: [engine(), UnoCSS(), react()],
+  integrations: [engine()],
   server: {
     port: 8020,
   },
@@ -179,7 +176,7 @@ async function setupTenant() {
 }
 
 async function installDeps() {
-  return await execute("npm install astro @astrojs/node @astrojs/react unocss vitest tsx")
+  return await execute("npm i astro @astrojs/node vitest typescript tsx")
 }
 
 async function writePackageScripts() {
