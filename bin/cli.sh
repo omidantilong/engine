@@ -17,7 +17,7 @@ case $1 in
     docker run --name tenant -i -t -p 8020:8020 tenant-image
   ;;
   "prebuild")
-    esbuild tenant.config.ts --outfile=engine/tenant.config.mjs
+    esbuild tenant.config.ts --outfile=$PWD/engine/tenant.config.mjs
   ;;
   "postbuild")
     mkdir -p dist/node_modules/
