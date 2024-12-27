@@ -132,6 +132,7 @@ engine/
 const dockerIgnoreSettings = `
 .DS_Store
 node_modules
+engine
 dist
 scratch
 .vscode
