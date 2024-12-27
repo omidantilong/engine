@@ -5,10 +5,13 @@
 
 case $1 in 
   "build")
-    astro check && docker buildx build --tag tenant-image .
+    astro check && engine prebuild && docker buildx build --tag tenant-image . && engine postbuild
   ;;
   "build-local")
-    engine prebuild && astro check && astro build && engine postbuild
+    astro check && engine prebuild && astro build && engine postbuild
+  ;;
+  "build-astro") 
+    astro build
   ;;
   "serve")
     docker run --name tenant -i -t -p 8020:8020 tenant-image
@@ -19,7 +22,9 @@ case $1 in
   "postbuild")
     mkdir -p dist/node_modules/
     mkdir -p dist/engine/
-    cp -r node_modules/{react,react-dom,scheduler} dist/node_modules/
+    cp -r node_modules/react dist/node_modules/
+    cp -r node_modules/react-dom dist/node_modules/
+    cp -r node_modules/scheduler dist/node_modules/
     cp -r engine/ dist/engine
     rm engine/tenant.config.mjs
   ;;
