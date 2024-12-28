@@ -81,6 +81,7 @@ export function engine(): AstroIntegration {
               rollupOptions: {
                 plugins: [
                   replace({
+                    preventAssignment: true,
                     "process.env.NODE_ENV": JSON.stringify("production"),
                   }),
                 ],
