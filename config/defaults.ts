@@ -1,7 +1,7 @@
 import type { EngineConfig } from "../types"
 
 export const engineDefaults: EngineConfig = {
-  contentTypes: {
+  pageTypes: {
     Page: {
       entryQuery: ({ ref, fragments, parentLookup }) => `
       ${fragments.pageData}

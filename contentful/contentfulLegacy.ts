@@ -1,9 +1,9 @@
 import type {
   EngineEntryReference,
   EngineEntryResponse,
-  EngineContentTypeConfig,
   EnginePathMap,
   EngineReferenceMap,
+  EnginePageTypeMap,
 } from "../types"
 import * as fragments from "./fragments"
 import { engineDefaults } from "../config/defaults"
@@ -23,15 +23,15 @@ export { parse } from "./markdown"
 
 //const conf = await loadConfig()
 
-const contentTypes: EngineContentTypeConfig = {
-  ...engineConfig.contentTypes,
-  ...engineDefaults.contentTypes,
+const pageTypes: EnginePageTypeMap = {
+  ...engineConfig.pageTypes,
+  ...engineDefaults.pageTypes,
 }
 
 const cwd = process.cwd()
 
 export async function getEntry(ref: EngineEntryReference): Promise<EngineEntryResponse> {
-  const query = contentTypes[ref.type as keyof EngineContentTypeConfig].entryQuery({
+  const query = pageTypes[ref.type as keyof EnginePageTypeMap].entryQuery({
     ref,
     fragments,
     parentLookup,
@@ -133,8 +133,8 @@ export async function createContentMap() {
   const pathMap: EnginePathMap = {}
   const refMap: EngineReferenceMap = {}
 
-  for (const contentType in contentTypes) {
-    const { collectionQuery, root } = contentTypes[contentType as keyof EngineContentTypeConfig]
+  for (const pageType in pageTypes) {
+    const { collectionQuery, root } = pageTypes[pageType as keyof EnginePageTypeMap]
     const query = collectionQuery({ fragments, parentLookup })
     const { data } = await fetchData({ query })
 

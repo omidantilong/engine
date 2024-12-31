@@ -1,13 +1,15 @@
 export interface EngineConfig {
-  contentTypes?: EngineContentTypeConfig
+  pageTypes?: EnginePageTypeMap
 }
 
-export interface EngineContentTypeConfig {
-  [key: Capitalize<string>]: {
-    root?: string
-    entryQuery: ({ ref, fragments, parentLookup }: EngineEntryQueryCallback) => string
-    collectionQuery: ({ fragments, parentLookup }: EngineCollectionQueryCallback) => string
-  }
+export interface EnginePageTypeMap {
+  [key: Capitalize<string>]: EnginePageType
+}
+
+export interface EnginePageType {
+  root?: string
+  entryQuery: ({ ref, fragments, parentLookup }: EngineEntryQueryCallback) => string
+  collectionQuery: ({ fragments, parentLookup }: EngineCollectionQueryCallback) => string
 }
 
 export interface EngineDefaultRoutes {
