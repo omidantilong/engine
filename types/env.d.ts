@@ -22,13 +22,13 @@ declare namespace CMS {
     title: string
     metaTitle: string
     parent: DefaultPage
-    modulesCollection: { items: Array<ContentModule> }
+    modulesCollection: { items: Array<DefaultContentModule> }
   }
-  interface DefaultModule extends Sys {
+  interface DefaultContentModule extends Sys {
     type: string
   }
   type Page = DefaultPage | TenantPage
-  type ContentModule = DefaultModule | TenantModule
+  type ContentModule = DefaultContentModule | TenantContentModule
 }
 
 declare namespace Engine {}
