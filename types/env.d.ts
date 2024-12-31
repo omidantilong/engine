@@ -27,7 +27,7 @@ declare namespace CMS {
   interface DefaultModule extends Sys {
     type: string
   }
-  type ContentEntry = DefaultPage | TenantPage
+  type Page = DefaultPage | TenantPage
   type ContentModule = DefaultModule | TenantModule
 }
 
