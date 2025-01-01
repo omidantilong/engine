@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro"
-import { getEntry } from "../contentful"
+import { getEntry } from "../contentful/contentfulLegacy"
 import ContentModules from "../components/ContentModules.astro"
 
 const { entry } = await getEntry(Astro.locals.engine.ref)

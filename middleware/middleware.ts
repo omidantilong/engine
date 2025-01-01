@@ -1,6 +1,6 @@
 import { defineMiddleware } from "astro:middleware"
 
-import { getEntryRefFromPath, getRedirect } from "../contentful"
+import { getEntryRefFromPath, getRedirect } from "../contentful/contentfulLegacy"
 import { sanitizePath } from "../util/path"
 
 //import type { MiddlewareHandler } from "astro"

@@ -1,7 +1,21 @@
 {
   "name": "@omidantilong/engine",
   "version": "0.0.1",
-  "main": "engine.ts",
+  "exports": {
+    ".": "./engine.ts",
+    "./components/*": "./components/*",
+    "./config": "./config/index.ts",
+    "./contentful": "./contentful/contentfulLegacy.ts",
+    "./contentful/*": "./contentful/*.ts",
+    "./layouts/*": "./layouts/*",
+    "./middleware/*": "./middleware/*.ts",
+    "./pages/*": "./pages/*",
+    "./presets/*.json": "./presets/*.json",
+    "./types/env": "./types/env.d.ts",
+    "./types": "./types/index.d.ts",
+    "./util/*": "./util/*.ts",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "test": "vitest"
   },
