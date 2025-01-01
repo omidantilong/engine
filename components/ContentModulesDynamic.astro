@@ -6,20 +6,23 @@
  * TODO: The structure of the components folder needs work
  */
 
+import type CMS from "engine:types/cms"
 
- interface Props {
+interface Props {
   data: Array<CMS.ContentModule>
 }
 
-let components: Record<string, {default: Function}> = {}
+let components: Record<string, { default: Function }> = {}
 const { data } = Astro.props
 ---
 
 {
   data.map(async (entry) => {
     if (entry && entry.type) {
-      if(!components[entry.type]) {
-        components[entry.type] = await import(`../../../../src/components/${entry.type}/${entry.type}.astro`)
+      if (!components[entry.type]) {
+        components[entry.type] = await import(
+          `../../../../src/components/${entry.type}/${entry.type}.astro`
+        )
       }
       const Component = components[entry.type].default
       return <Component data={entry} />

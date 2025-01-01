@@ -1,6 +1,6 @@
-import type { EngineConfig } from "../types"
+import type Engine from "engine:types"
 
-export const engineDefaults: EngineConfig = {
+export const engineDefaults: Engine.Config = {
   pageTypes: {
     Page: {
       entryQuery: ({ ref, fragments, parentLookup }) => `

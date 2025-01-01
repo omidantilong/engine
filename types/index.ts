@@ -1,55 +1,79 @@
-export interface EngineConfig {
-  pageTypes?: EnginePageTypeMap
+declare module "engine:types/cms" {
+  export interface Sys {
+    sys: {
+      id: string
+      publishedAt: string
+    }
+  }
+  export interface DefaultPage extends Sys {
+    type: "Page"
+    slug: string
+    title: string
+    metaTitle: string
+    parent: DefaultPage
+    modulesCollection: { items: Array<DefaultContentModule> }
+  }
+  export interface DefaultContentModule extends Sys {
+    type: string
+  }
+
+  export type ContentModule = DefaultContentModule | TenantContentModule
 }
 
-export interface EnginePageTypeMap {
-  [key: Capitalize<string>]: EnginePageType
-}
+declare module "engine:types" {
+  export interface Config {
+    pageTypes?: PageTypeMap
+  }
 
-export interface EnginePageType {
-  root?: string
-  entryQuery: ({ ref, fragments, parentLookup }: EngineEntryQueryCallback) => string
-  collectionQuery: ({ fragments, parentLookup }: EngineCollectionQueryCallback) => string
-}
+  export interface PageTypeMap {
+    [key: Capitalize<string>]: PageType
+  }
 
-export interface EngineDefaultRoutes {
-  [key: string]: () => { pattern: string; entrypoint: string }
-}
+  export interface PageType {
+    root?: string
+    entryQuery: ({ ref, fragments, parentLookup }: EntryQueryCallback) => string
+    collectionQuery: ({ fragments, parentLookup }: CollectionQueryCallback) => string
+  }
 
-export interface EngineFragmentCollection {
-  [key: string]: string
-}
+  export interface DefaultRoutes {
+    [key: string]: () => { pattern: string; entrypoint: string }
+  }
 
-export interface EngineEntryQueryCallback {
-  ref: EngineEntryReference
-  fragments: EngineFragmentCollection
-  parentLookup: Function
-}
+  export interface FragmentCollection {
+    [key: string]: string
+  }
 
-export interface EngineCollectionQueryCallback {
-  fragments: EngineFragmentCollection
-  parentLookup: Function
-}
+  export interface EntryQueryCallback {
+    ref: EntryReference
+    fragments: FragmentCollection
+    parentLookup: Function
+  }
 
-export interface EngineEntryReference {
-  id: string
-  type: string
-}
+  export interface CollectionQueryCallback {
+    fragments: FragmentCollection
+    parentLookup: Function
+  }
 
-export interface EngineEntryResponse {
-  entry: EngineEntry
-  errors: any
-}
-
-export interface EnginePathMap {
-  [key: string]: {
+  export interface EntryReference {
     id: string
     type: string
   }
-}
 
-export interface EngineReferenceMap {
-  [key: string]: string
-}
+  export interface EntryResponse {
+    entry: Entry
+    errors: any
+  }
 
-type EngineEntry = CMS.DefaultPage | CMS.TenantPage
+  export interface PathMap {
+    [key: string]: {
+      id: string
+      type: string
+    }
+  }
+
+  export interface ReferenceMap {
+    [key: string]: string
+  }
+  //type Entry = { type: string }
+  export type Entry = import("engine:types/cms").DefaultPage | import("engine:types/cms").TenantPage
+}

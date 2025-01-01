@@ -1,10 +1,6 @@
-import type {
-  EngineEntryReference,
-  EngineEntryResponse,
-  EnginePathMap,
-  EngineReferenceMap,
-  EnginePageTypeMap,
-} from "../types"
+import type Engine from "engine:types"
+import type CMS from "engine:types/cms"
+
 import * as fragments from "./fragments"
 import { engineDefaults } from "../config/defaults"
 import { parentLookup } from "./parentLookup"
@@ -23,15 +19,15 @@ export { parse } from "./markdown"
 
 //const conf = await loadConfig()
 
-const pageTypes: EnginePageTypeMap = {
+const pageTypes: Engine.PageTypeMap = {
   ...engineConfig.pageTypes,
   ...engineDefaults.pageTypes,
 }
 
 const cwd = process.cwd()
 
-export async function getEntry(ref: EngineEntryReference): Promise<EngineEntryResponse> {
-  const query = pageTypes[ref.type as keyof EnginePageTypeMap].entryQuery({
+export async function getEntry(ref: Engine.EntryReference): Promise<Engine.EntryResponse> {
+  const query = pageTypes[ref.type as keyof Engine.PageTypeMap].entryQuery({
     ref,
     fragments,
     parentLookup,
@@ -105,8 +101,10 @@ export async function fetchData({ query, preview = false }: { query: string; pre
   })
 }
 
-export async function getEntryRefFromPath(pathname: string): Promise<EngineEntryReference | false> {
-  let paths: EnginePathMap
+export async function getEntryRefFromPath(
+  pathname: string
+): Promise<Engine.EntryReference | false> {
+  let paths: Engine.PathMap
   try {
     await fs.access(resolve(cwd + "/engine/paths.json"))
     paths = await fs
@@ -130,11 +128,11 @@ export async function getEntryRefFromPath(pathname: string): Promise<EngineEntry
 export async function createContentMap() {
   console.log("Rebuilding content path map")
 
-  const pathMap: EnginePathMap = {}
-  const refMap: EngineReferenceMap = {}
+  const pathMap: Engine.PathMap = {}
+  const refMap: Engine.ReferenceMap = {}
 
   for (const pageType in pageTypes) {
-    const { collectionQuery, root } = pageTypes[pageType as keyof EnginePageTypeMap]
+    const { collectionQuery, root } = pageTypes[pageType as keyof Engine.PageTypeMap]
     const query = collectionQuery({ fragments, parentLookup })
     const { data } = await fetchData({ query })
 

@@ -10,11 +10,8 @@
 import dotenv from "dotenv"
 import { outputFile } from "fs-extra"
 
-import type {
-  EnginePageTypeMap, //EngineLinkReference,
-  EnginePathMap,
-  EngineReferenceMap,
-} from "../types"
+import type Engine from "engine:types"
+import type CMS from "engine:types/cms"
 
 import { parentLookup } from "../contentful/parentLookup"
 import * as fragments from "../contentful/fragments"
@@ -81,16 +78,16 @@ export async function fetchData({ query, preview = false }: { query: string; pre
 export async function createContentMap() {
   const cwd = process.cwd()
 
-  const pageTypes: EnginePageTypeMap = {
+  const pageTypes: Engine.PageTypeMap = {
     ...engineConfig.pageTypes,
     ...engineDefaults.pageTypes,
   }
 
-  const pathMap: EnginePathMap = {}
-  const refMap: EngineReferenceMap = {}
+  const pathMap: Engine.PathMap = {}
+  const refMap: Engine.ReferenceMap = {}
 
   for (const pageType in pageTypes) {
-    const { collectionQuery, root } = pageTypes[pageType as keyof EnginePageTypeMap]
+    const { collectionQuery, root } = pageTypes[pageType as keyof Engine.PageTypeMap]
     const query = collectionQuery({ fragments, parentLookup })
     const { data } = await fetchData({ query })
 

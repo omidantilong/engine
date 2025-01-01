@@ -6,16 +6,17 @@
  * TODO: The structure of the components folder needs work
  */
 
+import type { ContentModule } from "engine:types/cms"
 
- interface Props {
-  data: Array<CMS.DefaultContentModule | CMS.TenantContentModule>
+interface Props {
+  data: Array<ContentModule>
 }
 
 let components
 try {
   //@ts-ignore
   components = await import("../../../../src/components")
-} catch(e) {
+} catch (e) {
   console.log(e)
 }
 
@@ -23,10 +24,11 @@ const { data } = Astro.props
 ---
 
 {
-  components && data.map(async (entry) => {
-    if (entry && components[entry.type]) {
-      const Component = components[entry.type]
-      return <Component data={entry} />
-    }
-  })
+  components &&
+    data.map(async (entry) => {
+      if (entry && components[entry.type]) {
+        const Component = components[entry.type]
+        return <Component data={entry} />
+      }
+    })
 }

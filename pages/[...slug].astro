@@ -8,8 +8,8 @@ const { entry } = await getEntry(Astro.locals.engine.ref)
 if (entry.type !== "Page") {
   return Astro.redirect("/")
 }
-
 ---
+
 <Layout title={entry.metaTitle || entry.title}>
   <main>
     <div class="wrap">
