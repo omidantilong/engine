@@ -5,5 +5,11 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "baseUrl": ".",
-  }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.astro",
+    "**/*.d.ts",
+    "../../../types/cms.d.ts"
+  ]
 }
