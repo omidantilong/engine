@@ -24,7 +24,6 @@
     "engine.ts",
     "tsconfig.json",
     "types/env.d.ts",
-    "types/cms.d.ts",
     "types/index.ts"
   ],
   "author": "",
