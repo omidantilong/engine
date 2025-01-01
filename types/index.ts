@@ -16,7 +16,7 @@ declare module "engine:types/cms" {
   export interface DefaultContentModule extends Sys {
     type: string
   }
-
+  export type RootEntry = DefaultPage | TenantPage
   export type ContentModule = DefaultContentModule | TenantContentModule
 }
 
@@ -60,7 +60,7 @@ declare module "engine:types" {
   }
 
   export interface EntryResponse {
-    entry: Entry
+    entry: import("engine:types/cms").RootEntry
     errors: any
   }
 
@@ -75,5 +75,4 @@ declare module "engine:types" {
     [key: string]: string
   }
   //type Entry = { type: string }
-  export type Entry = import("engine:types/cms").DefaultPage | import("engine:types/cms").TenantPage
 }
