@@ -1,6 +1,6 @@
 {
   "name": "@omidantilong/engine",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "engine.ts",
   "private": false,
   "publishConfig": {
@@ -16,7 +16,7 @@
     "contentful",
     "layouts",
     "logger",
-    "middlware",
+    "middleware",
     "pages",
     "presets",
     "toolbar",
