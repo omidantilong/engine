@@ -149,7 +149,7 @@ async function setupFiles() {
 
     await fs.outputFile(cwd + "/.vscode/settings.json", editorSettings)
     await fs.outputFile(cwd + "/tsconfig.json", tsconfigSettings)
-    await fs.outputFile(cwd + "/prettier.config.mjs", prettierSettings.trimStart())
+    await fs.outputFile(cwd + "/prettier.config.js", prettierSettings.trimStart())
     await fs.outputFile(cwd + "/.gitignore", gitIgnoreSettings.trimStart())
     await fs.outputFile(cwd + "/.dockerignore", dockerIgnoreSettings.trimStart())
 
