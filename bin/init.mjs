@@ -33,30 +33,26 @@ const editorSettings = formatJSON({
 })
 
 const tsconfigSettings = formatJSON({
-  extends: "astro/tsconfigs/strict",
+  extends: "@omidantilong/engine/presets/tsconfig.tenant",
   compilerOptions: {
     jsx: "react-jsx",
     jsxImportSource: "react",
     baseUrl: ".",
-    skipLibCheck: false,
-    paths: {
-      "@/*": ["src/*"],
-    },
   },
 })
 
-const prettierSettings = formatJSON({
+const prettierSettings = `
+export default {
   trailingComma: "es5",
   tabWidth: 2,
   semi: false,
   singleQuote: false,
   printWidth: 100,
-})
+}
+`
 
 const envTypes = `
-/// <reference types="astro/client" />
-/// <reference types="@omidantilong/engine/types" />
-/// <reference types="@omidantilong/engine/types/env.d.ts" />
+/// <reference types="@omidantilong/engine/types/env" />
 `
 
 const astroConfig = `
@@ -93,9 +89,9 @@ export default getViteConfig({})
 `
 
 const tenantConfig = `
-import type { EngineConfig } from "@omidantilong/engine/types"
+import defineEngineConfig from "@omidantilong/engine/config"
 
-export const engineConfig: EngineConfig = {}
+export const engineConfig = defineEngineConfig({})
 `
 
 const gitIgnoreSettings = `
@@ -152,7 +148,7 @@ async function setupFiles() {
 
     await fs.outputFile(cwd + "/.vscode/settings.json", editorSettings)
     await fs.outputFile(cwd + "/tsconfig.json", tsconfigSettings)
-    await fs.outputFile(cwd + "/.prettierrc", prettierSettings)
+    await fs.outputFile(cwd + "/prettier.config.mjs", prettierSettings.trimStart())
     await fs.outputFile(cwd + "/.gitignore", gitIgnoreSettings.trimStart())
     await fs.outputFile(cwd + "/.dockerignore", dockerIgnoreSettings.trimStart())
 
