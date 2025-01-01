@@ -1,10 +1,31 @@
 {
   "name": "@omidantilong/engine",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "main": "engine.ts",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "vitest"
   },
+  "files": [
+    "bin",
+    "components",
+    "config",
+    "contentful",
+    "layouts",
+    "logger",
+    "middlware",
+    "pages",
+    "presets",
+    "toolbar",
+    "util",
+    "engine.ts",
+    "tsconfig.json",
+    "types/env.d.ts",
+    "types/index.d.ts"
+  ],
   "author": "",
   "license": "ISC",
   "description": "",
