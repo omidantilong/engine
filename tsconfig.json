@@ -10,6 +10,6 @@
     "**/*.ts",
     "**/*.astro",
     "**/*.d.ts",
-    "../../../types/cms.d.ts"
+    "../../../types/tenant.d.ts"
   ]
 }
