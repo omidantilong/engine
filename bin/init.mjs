@@ -42,6 +42,7 @@ const tsconfigSettings = formatJSON({
 })
 
 const prettierSettings = `
+/** @type {import("prettier").Config} */
 export default {
   trailingComma: "es5",
   tabWidth: 2,
