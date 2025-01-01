@@ -94,7 +94,7 @@ export async function createContentMap() {
     const query = collectionQuery({ fragments, parentLookup })
     const { data } = await fetchData({ query })
 
-    data.collection.items.forEach((entry: CMS.Page) => {
+    data.collection.items.forEach((entry: CMS.DefaultPage | CMS.TenantPage) => {
       const resolvedPath = getFullPath(entry, root)
 
       pathMap[resolvedPath] = { id: entry.sys.id, type: entry.type }

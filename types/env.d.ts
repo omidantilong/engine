@@ -1,5 +1,6 @@
 /// <reference types="astro/client" />
-/// <reference path="../../../../types/tenant.d.ts" />
+//@ts-ignore
+/// <reference types="../../../../types/cms" />
 
 declare namespace App {
   interface Locals extends Record<string, any> {
@@ -8,27 +9,3 @@ declare namespace App {
     }
   }
 }
-
-declare namespace CMS {
-  interface Sys {
-    sys: {
-      id: string
-      publishedAt: string
-    }
-  }
-  interface DefaultPage extends Sys {
-    type: "Page"
-    slug: string
-    title: string
-    metaTitle: string
-    parent: DefaultPage
-    modulesCollection: { items: Array<DefaultContentModule> }
-  }
-  interface DefaultContentModule extends Sys {
-    type: string
-  }
-  type Page = DefaultPage | TenantPage
-  type ContentModule = DefaultContentModule | TenantContentModule
-}
-
-declare namespace Engine {}

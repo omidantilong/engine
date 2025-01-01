@@ -52,4 +52,4 @@ export interface EngineReferenceMap {
   [key: string]: string
 }
 
-type EngineEntry = CMS.Page
+type EngineEntry = CMS.DefaultPage | CMS.TenantPage

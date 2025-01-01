@@ -9,15 +9,13 @@ if (entry.type !== "Page") {
   return Astro.redirect("/")
 }
 
-const contentModules = entry.modulesCollection.items || []
 ---
-
 <Layout title={entry.metaTitle || entry.title}>
   <main>
     <div class="wrap">
       <h1>{entry.title}</h1>
       <time>{entry.sys.publishedAt}</time>
     </div>
-    {contentModules && <ContentModules data={contentModules} />}
+    <ContentModules data={entry.modulesCollection.items} />
   </main>
 </Layout>
