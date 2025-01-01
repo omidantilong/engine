@@ -37,7 +37,7 @@ export interface EngineEntryReference {
 }
 
 export interface EngineEntryResponse {
-  entry: EngineContentEntry
+  entry: EngineEntry
   errors: any
 }
 
@@ -51,3 +51,5 @@ export interface EnginePathMap {
 export interface EngineReferenceMap {
   [key: string]: string
 }
+
+type EngineEntry = CMS.Page
