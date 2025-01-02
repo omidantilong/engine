@@ -1,3 +1,5 @@
+import type { Sys } from "../types/cms"
+
 export interface Config {
   pageTypes?: PageTypeMap
 }
@@ -36,8 +38,8 @@ export interface EntryReference {
   type: string
 }
 
-export interface EntryResponse {
-  entry: import("engine:types/cms").RootEntry
+export interface EntryResponse<PageType extends Sys> {
+  entry: PageType
   errors: any
 }
 

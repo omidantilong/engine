@@ -1,5 +1,5 @@
 import type { AstroIntegration, ViteUserConfig } from "astro"
-import type { EngineDefaultRoutes } from "./types"
+import type { DefaultRoutes } from "./types"
 import fs from "fs-extra"
 import replace from "@rollup/plugin-replace"
 
@@ -34,7 +34,7 @@ correctly outputs just one entry point when creating a build.
 
 */
 
-const defaultRoutes: EngineDefaultRoutes = {
+const defaultRoutes: DefaultRoutes = {
   "./src/pages/[...slug].astro": () => ({
     pattern: "[...slug]",
     entrypoint: "@omidantilong/engine/pages/[...slug].astro",

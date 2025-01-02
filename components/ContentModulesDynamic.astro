@@ -6,10 +6,10 @@
  * TODO: The structure of the components folder needs work
  */
 
-import type CMS from "engine:types/cms"
+import type { ContentModule } from "../types/cms"
 
 interface Props {
-  data: Array<CMS.ContentModule>
+  data: Array<ContentModule>
 }
 
 let components: Record<string, { default: Function }> = {}

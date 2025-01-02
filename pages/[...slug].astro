@@ -2,8 +2,9 @@
 import Layout from "../layouts/Layout.astro"
 import { getEntry } from "../contentful"
 import ContentModules from "../components/ContentModules.astro"
+import type { DefaultPage } from "types/cms"
 
-const { entry } = await getEntry(Astro.locals.engine.ref)
+const { entry } = await getEntry<DefaultPage>(Astro.locals.engine.ref)
 
 if (entry.type !== "Page") {
   return Astro.redirect("/")

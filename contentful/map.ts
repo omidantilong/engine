@@ -7,11 +7,11 @@
 // calls. But the alternative approach of extending the graphql query
 // seems to be performing ok so far
 
+import type * as Engine from "../types"
+import type { Sys } from "../types/cms"
+
 import dotenv from "dotenv"
 import { outputFile } from "fs-extra"
-
-import type * as Engine from "../types"
-import type CMS from "engine:types/cms"
 
 import { parentLookup } from "../contentful/parentLookup"
 import * as fragments from "../contentful/fragments"
@@ -91,7 +91,7 @@ export async function createContentMap() {
     const query = collectionQuery({ fragments, parentLookup })
     const { data } = await fetchData({ query })
 
-    data.collection.items.forEach((entry: CMS.RootEntry) => {
+    data.collection.items.forEach((entry: Sys) => {
       const resolvedPath = getFullPath(entry, root)
 
       pathMap[resolvedPath] = { id: entry.sys.id, type: entry.type }

@@ -1,11 +1,12 @@
 import type * as Engine from "../types"
-import type CMS from "engine:types/cms"
+import type { Sys } from "../types/cms"
+
+import fs from "node:fs/promises"
+import gqlmin from "gqlmin"
 
 import * as fragments from "./fragments"
 import { engineDefaults } from "../config/defaults"
 import { parentLookup } from "./parentLookup"
-import fs from "node:fs/promises"
-import gqlmin from "gqlmin"
 
 //@ts-ignore
 import { engineConfig } from "../../../../tenant.config"
@@ -26,15 +27,17 @@ const pageTypes: Engine.PageTypeMap = {
 
 const cwd = process.cwd()
 
-export async function getEntry(ref: Engine.EntryReference): Promise<Engine.EntryResponse> {
+export async function getEntry<PageType>(
+  ref: Engine.EntryReference
+): Promise<{ entry: PageType; errors: any }> {
   const query = pageTypes[ref.type as keyof Engine.PageTypeMap].entryQuery({
     ref,
     fragments,
     parentLookup,
   })
   const { data, errors } = await fetchData({ query })
-
   const { entry } = data
+
   return { entry, errors }
 }
 
@@ -136,7 +139,7 @@ export async function createContentMap() {
     const query = collectionQuery({ fragments, parentLookup })
     const { data } = await fetchData({ query })
 
-    data.collection.items.forEach((entry: CMS.RootEntry) => {
+    data.collection.items.forEach((entry: Sys) => {
       const resolvedPath = getFullPath(entry, root)
 
       pathMap[resolvedPath] = { id: entry.sys.id, type: entry.type }
