@@ -1,6 +1,6 @@
 {
   "name": "@omidantilong/engine",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "type": "module",
   "main": "engine.ts",
   "private": false,
@@ -24,8 +24,8 @@
     "util",
     "engine.ts",
     "tsconfig.json",
+    "types/cms.ts",
     "types/env.d.ts",
-    "types/cms.d.ts",
     "types/index.ts"
   ],
   "author": "",
