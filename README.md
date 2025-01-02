@@ -2,12 +2,10 @@
 
 The package contains the internals ("engine") for the [astro-tenant repo](https://github.com/omidantilong/astro-tenant).
 
-It's not currently published to NPM, but it can be installed straight from github.
-
 To get started in a fresh project, run:
 
 ```
-npm install github:omidantilong/engine
+npm install @omidantilong/engine
 npx engine init
 ```
 
@@ -34,7 +32,7 @@ Tenants need the following files:
 
 - `.env` file with appropriate Contentful token, space id and environment name
 - `src/components` for registering components
-- `src/types/env.d.ts` referencing astro and engine types
+- `src/types/env.d.ts` referencing engine env types
 - `src/types/tenant.d.ts` types for bespoke content models
 - `tenant.config.ts` containing local tenant config
 - `astro.config.ts` standard astro config
