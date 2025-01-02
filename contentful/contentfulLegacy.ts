@@ -27,7 +27,7 @@ const pageTypes: Engine.PageTypeMap = {
 
 const cwd = process.cwd()
 
-export async function getEntry<PageType>(
+export async function getEntry<PageType extends Sys>(
   ref: Engine.EntryReference
 ): Promise<{ entry: PageType; errors: any }> {
   const query = pageTypes[ref.type as keyof Engine.PageTypeMap].entryQuery({
