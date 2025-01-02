@@ -10,7 +10,7 @@
 import dotenv from "dotenv"
 import { outputFile } from "fs-extra"
 
-import type Engine from "engine:types"
+import type * as Engine from "../types"
 import type CMS from "engine:types/cms"
 
 import { parentLookup } from "../contentful/parentLookup"

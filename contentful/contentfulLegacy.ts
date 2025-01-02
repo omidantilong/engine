@@ -1,4 +1,4 @@
-import type Engine from "engine:types"
+import type * as Engine from "../types"
 import type CMS from "engine:types/cms"
 
 import * as fragments from "./fragments"
