@@ -1,6 +1,9 @@
 import type { Sys } from "../types/cms"
 
 export interface Config {
+  /**
+   * Remember this is how you add type hints
+   */
   pageTypes?: PageTypeMap
 }
 
