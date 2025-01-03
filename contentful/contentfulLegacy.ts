@@ -36,9 +36,14 @@ export async function getEntry<PageType extends Sys>(
     parentLookup,
   })
   const { data, errors } = await fetchData({ query })
-  const { entry } = data
 
-  return { entry, errors }
+  // This will be caught by Astro and should render inside the 500 template
+  if (errors) {
+    //throw new Error("Error fetching from CMS", { cause: "" })
+    throw new Error("Error fetching from CMS")
+  }
+
+  return { entry: data.entry, errors }
 }
 
 export async function getAsset(id: string) {
