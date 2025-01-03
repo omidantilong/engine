@@ -12,7 +12,7 @@ interface Props {
   data: Array<ContentModule>
 }
 
-let components
+let components: Record<string, Function> = {}
 try {
   //@ts-ignore
   components = await import("../../../../src/components")
