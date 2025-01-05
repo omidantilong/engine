@@ -36,14 +36,9 @@ export async function getEntry<PageType extends Sys>(
     parentLookup,
   })
   const { data, errors } = await fetchData({ query })
+  const { entry } = data
 
-  // This will be caught by Astro and should render inside the 500 template
-  if (errors) {
-    //throw new Error("Error fetching from CMS", { cause: "" })
-    throw new Error("Error fetching from CMS")
-  }
-
-  return { entry: data.entry, errors }
+  return { entry, errors }
 }
 
 export async function getAsset(id: string) {
@@ -112,15 +107,10 @@ export async function fetchData({ query, preview = false }: { query: string; pre
 export async function getEntryRefFromPath(
   pathname: string
 ): Promise<Engine.EntryReference | false> {
-  let paths: Engine.PathMap
-  try {
-    await fs.access(resolve(cwd + "/engine/paths.json"))
-    paths = await fs
-      .readFile(resolve(cwd + "/engine/paths.json"))
-      .then((res) => JSON.parse(res.toString()))
-  } catch (e) {
-    paths = await createContentMap()
-  }
+  const paths = await fs
+    .readFile(resolve(cwd + "/engine/paths.json"))
+    .then((res) => JSON.parse(res.toString()))
+    .catch(async () => await createContentMap())
 
   return paths[pathname] || false
 }
