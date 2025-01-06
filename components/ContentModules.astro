@@ -28,7 +28,7 @@ const { data } = Astro.props
     data.map(async (entry) => {
       if (entry && components[entry.type]) {
         const Component = components[entry.type]
-        return <Component data={entry} />
+        return <Component {...entry} />
       }
     })
 }
