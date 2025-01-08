@@ -1,7 +1,8 @@
 import { defineMiddleware } from "astro:middleware"
 
-import { getEntryRefFromPath, getRedirect } from "../contentful"
+import { getEntry, getEntryRefFromPath, getRedirect } from "../contentful"
 import { sanitizePath } from "../util/path"
+import type { Sys } from "@omidantilong/engine/types/cms"
 
 //import type { MiddlewareHandler } from "astro"
 
@@ -46,8 +47,20 @@ export const onRequest = defineMiddleware(async (context, next) => {
       return next("/404")
       //return { data: { error: { code: 404 } } }
     }
+
+    //const { entry } = await getEntry(ref)
     //console.log(entry)
-    context.locals.engine = { ref }
+    //interface PageType extends Sys {}
+
+    context.locals.engine = {
+      ref,
+      entry: async () => {
+        return await getEntry(ref)
+      },
+      // entry: <PageType extends Sys>() => { entry: PageType } {
+      //   return { entry }
+      // },
+    }
   }
 
   // if (context.url.pathname === "/some-test-path") {
